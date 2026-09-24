@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#fff5ef">
+    <meta name="description" content="Una pequeña sorpresa de cumpleaños para ti.">
+    <title>Para ti ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="card">
+      <button class="heart-button" type="button" aria-label="Haz click para abrir tu sorpresa" aria-controls="birthday-message" aria-expanded="false">
+        <span class="heart" aria-hidden="true">♥</span>
+        <span class="prompt">Haz Click ❤️</span>
+      </button>
+      <div class="message" id="birthday-message" aria-live="polite" aria-atomic="true"></div>
+    </main>
+    <div class="floating-hearts" aria-hidden="true"></div>
+  </body>
+</html>

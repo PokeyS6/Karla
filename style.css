@@ -1,0 +1,129 @@
+:root {
+  color-scheme: light;
+  font-family: ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
+  color: #84394b;
+  background: #fff5ef;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  background: radial-gradient(ellipse at center, #ffe5e9 0%, #fff5ef 72%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.heart-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0;
+  padding: 12px 24px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  border-radius: 28px;
+}
+
+.heart-button:focus-visible {
+  outline: 2px solid #bf4b66;
+  outline-offset: 6px;
+}
+
+.heart {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: clamp(140px, 44vw, 190px);
+  line-height: 1.1;
+  color: #e94d70;
+  text-shadow: 0 12px 28px #d84a6926;
+  animation: heartbeat 1.8s ease-in-out infinite;
+  transition: transform 600ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.prompt {
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.message {
+  display: none;
+  margin-top: 24px;
+}
+
+.message h1 {
+  margin: 0 0 12px;
+  font-size: clamp(23px, 6.5vw, 30px);
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.message p {
+  margin: 0;
+  font-size: clamp(15px, 4.3vw, 18px);
+  line-height: 1.6;
+  color: #9b6270;
+}
+
+.opened .heart { animation: none; transform: scale(1.1); }
+.opened .prompt { display: none; }
+.opened .message { display: block; animation: reveal 750ms ease both; }
+
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -40px;
+  left: var(--left);
+  font-family: Georgia, serif;
+  font-size: var(--size);
+  color: #e989a0;
+  opacity: 0;
+  animation: float-up 5s ease-out var(--delay) both;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.06); }
+  55% { transform: scale(1); }
+  70% { transform: scale(1.03); }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(10px) scale(.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes float-up {
+  0% { opacity: 0; transform: translateY(0) rotate(-10deg); }
+  20% { opacity: .45; }
+  100% { opacity: 0; transform: translate(24px, -90vh) rotate(15deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart, .opened .message { animation: none; transition: none; }
+  .floating-hearts { display: none; }
+}
