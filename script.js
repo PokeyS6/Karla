@@ -18,12 +18,12 @@ button.addEventListener('click', () => {
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // A small, one-time burst of hearts keeps the card quiet and simple.
-  for (let i = 0; i < 7; i++) {
+  // A small, one-time celebration floats behind the card.
+  for (let i = 0; i < 12; i++) {
     const heart = document.createElement('span');
-    heart.className = 'floating-heart';
-    heart.textContent = '♥';
-    heart.style.setProperty('--left', `${10 + i * 12}%`);
+    heart.className = i % 3 === 0 ? 'floating-heart confetti' : 'floating-heart';
+    heart.textContent = i % 3 === 0 ? '' : i % 3 === 1 ? '♥' : '✧';
+    heart.style.setProperty('--left', `${4 + i * 8}%`);
     heart.style.setProperty('--size', `${14 + (i % 3) * 5}px`);
     heart.style.setProperty('--delay', `${i * 0.18}s`);
     floatingHearts.append(heart);

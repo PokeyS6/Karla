@@ -15,16 +15,39 @@ body {
   display: grid;
   place-items: center;
   padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
-  background: radial-gradient(ellipse at center, #ffe5e9 0%, #fff5ef 72%);
+  background: radial-gradient(ellipse at 15% 10%, #fbd9e1 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 90%, #fbe2d5 0%, transparent 55%), #fff5ef;
   -webkit-tap-highlight-color: transparent;
 }
 
 .card {
   width: 100%;
-  max-width: 420px;
+  max-width: 380px;
+  padding: 32px 20px 36px;
+  border: 1px solid #fffaf5;
+  border-radius: 32px;
+  background: #fff9f4;
+  box-shadow: 0 20px 65px #a8446014, 0 3px 12px #a8446008;
   text-align: center;
   position: relative;
   z-index: 1;
+  animation: reveal 800ms ease both;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid #efd5d7;
+  border-radius: 25px;
+  pointer-events: none;
+}
+
+.card-ornament {
+  color: #b9657a;
+  font-size: 18px;
+  letter-spacing: .2em;
+  margin-bottom: 12px;
 }
 
 .heart-button {
@@ -52,7 +75,7 @@ body {
   font-size: clamp(140px, 44vw, 190px);
   line-height: 1.1;
   color: #e94d70;
-  text-shadow: 0 12px 28px #d84a6926;
+  text-shadow: 0 4px 0 #cd3e5c, 0 12px 32px #e94d7038;
   animation: heartbeat 1.8s ease-in-out infinite;
   transition: transform 600ms cubic-bezier(.2, .8, .2, 1);
 }
@@ -62,6 +85,10 @@ body {
   font-size: 17px;
   font-weight: 600;
   letter-spacing: .04em;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fbe6e9;
+  box-shadow: 0 2px 0 #f0cbd3;
 }
 
 .message {
@@ -71,7 +98,7 @@ body {
 
 .message h1 {
   margin: 0 0 12px;
-  font-size: clamp(23px, 6.5vw, 30px);
+  font-size: clamp(23px, 6.2vw, 29px);
   line-height: 1.3;
   font-weight: 700;
 }
@@ -80,18 +107,63 @@ body {
   margin: 0;
   font-size: clamp(15px, 4.3vw, 18px);
   line-height: 1.6;
-  color: #9b6270;
+  color: #895562;
 }
 
 .opened .heart { animation: none; transform: scale(1.1); }
 .opened .prompt { display: none; }
 .opened .message { display: block; animation: reveal 750ms ease both; }
 
-.floating-hearts {
+.decorations, .floating-hearts {
   position: fixed;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+}
+
+/* All decorations stay behind the opaque card and ignore taps. */
+.balloon {
+  position: absolute;
+  width: 54px;
+  height: 68px;
+  border-radius: 50% 50% 47% 47%;
+  background: radial-gradient(circle at 30% 25%, #ffe6ec, #eaa0b2 75%);
+  box-shadow: inset -5px -4px 12px #c96c8020;
+  animation: sway 5s ease-in-out infinite alternate;
+}
+
+.balloon::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 23px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 7px solid #e6a0af;
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  top: 73px;
+  left: 26px;
+  width: 13px;
+  height: 76px;
+  border-left: 1px solid #ce9ca780;
+  border-radius: 50%;
+}
+
+.balloon-left { left: 3%; top: 9%; transform: rotate(-14deg); }
+.balloon-right { right: 3%; bottom: 18%; animation-delay: -2s; }
+.sparkle, .edge-heart { position: absolute; color: #bb7c69; }
+.sparkle-one { top: 11%; right: 18%; font-size: 27px; }
+.sparkle-two { bottom: 12%; left: 17%; font-size: 16px; }
+.sparkle-three { top: 23%; right: 6%; font-size: 18px; }
+.edge-heart { bottom: 7%; right: 30%; font-size: 25px; color: #c98094; }
+
+@keyframes sway {
+  from { transform: translateY(0) rotate(-8deg); }
+  to { transform: translateY(-10px) rotate(5deg); }
 }
 
 .floating-heart {
@@ -104,6 +176,15 @@ body {
   opacity: 0;
   animation: float-up 5s ease-out var(--delay) both;
 }
+
+.floating-heart.confetti {
+  width: 5px;
+  height: 10px;
+  border-radius: 2px;
+  background: #d5a368;
+}
+
+.floating-heart.confetti:nth-child(even) { background: #dd8199; }
 
 @keyframes heartbeat {
   0%, 100% { transform: scale(1); }
@@ -124,6 +205,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heart, .opened .message { animation: none; transition: none; }
+  .card, .heart, .balloon, .opened .message { animation: none; transition: none; }
   .floating-hearts { display: none; }
+}
+
+@media (max-height: 600px) {
+  .card { padding-top: 20px; padding-bottom: 24px; }
+  .heart { font-size: 125px; }
+  .card-ornament { margin-bottom: 0; }
+  .message { margin-top: 16px; }
 }
